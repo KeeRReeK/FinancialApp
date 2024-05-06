@@ -3,4 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#4fa853</color>
+    <color name="color1">#E8EDB7</color>
+    <color name="color2">#D2D6ED</color>
+    <color name="color3">#E6EDF3</color>
+    <color name="red">#FF1100</color>
+    <color name="addImage">#2FB8F6</color>
 </resources>
