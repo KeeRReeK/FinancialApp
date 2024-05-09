@@ -38,6 +38,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/buttonProfit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -50,6 +51,7 @@
                 android:backgroundTint="@color/green"/>
 
             <Button
+                android:id="@+id/buttonExpensive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -63,10 +65,11 @@
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_below="@id/LinearProfitAndExpenses"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:id="@+id/frame_layout_home_fragment"
+            android:layout_below="@id/LinearProfitAndExpenses"/>
 
 
     </RelativeLayout>

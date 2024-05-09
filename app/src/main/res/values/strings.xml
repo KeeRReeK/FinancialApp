@@ -2,4 +2,42 @@
     <string name="app_name">Financial App</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="income_expense_array">
+        <item>Дохід</item>
+        <item>Витрати</item>
+    </string-array>
+
+    <string-array name="deposit_array">
+        <item>Депозит</item>
+        <item>Зарплата</item>
+        <item>Збереження</item>
+    </string-array>
+
+
+    <string-array name="income_array">
+    <item>Депозит</item>
+    <item>Зарплата</item>
+    <item>Збереження</item>
+</string-array>
+
+
+    <string-array name="expense_array">
+        <item>Автомобіль</item>
+        <item>Одяг</item>
+        <item>Комунікація</item>
+        <item>Харчування поза домом</item>
+        <item>Розваги</item>
+        <item>Їжа</item>
+        <item>Подарунки</item>
+        <item>Здоров\'я</item>
+        <item>Будинок</item>
+        <item>Домашні тварини</item>
+        <item>Спорт</item>
+        <item>Таксі</item>
+        <item>Засоби гігієни</item>
+        <item>Транспорт</item>
+        <item>Рахунки</item>
+    </string-array>
+
 </resources>
