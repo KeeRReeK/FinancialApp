@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    tools:context=".Fragments.HomeFragment">
 
     <RelativeLayout
         android:id="@+id/main"
@@ -65,11 +65,11 @@
 
         </LinearLayout>
 
-        <FrameLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@+id/LinearProfitAndExpenses"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/frame_layout_home_fragment"
-            android:layout_below="@id/LinearProfitAndExpenses"/>
+            android:padding="16dp"/>
 
 
     </RelativeLayout>

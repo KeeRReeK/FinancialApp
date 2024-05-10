@@ -1,23 +1,15 @@
 package com.example.financialapp
 
 import MyBottomDialog
-import android.app.AlertDialog
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import android.view.Window
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.example.financialapp.Fragments.HomeFragment
+import com.example.financialapp.Fragments.InfoFragment
+import com.example.financialapp.Fragments.SettingsFragment
+import com.example.financialapp.Fragments.StatsFragment
 import com.example.financialapp.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton

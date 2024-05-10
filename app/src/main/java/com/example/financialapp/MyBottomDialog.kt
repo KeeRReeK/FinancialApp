@@ -1,27 +1,39 @@
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import com.example.financialapp.DB.Note
+import com.example.financialapp.DB.NotesDataBaseHelper
 import com.example.financialapp.R
 
 class MyBottomDialog : DialogFragment() {
+
+    private lateinit var db: NotesDataBaseHelper
+    private lateinit var sumEditText: EditText
+    private lateinit var descriptionEditText: EditText
+    private lateinit var selectingTypeSpinner: Spinner
+    private lateinit var selectingCategorySpinner: Spinner
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireActivity())
         val inflater = requireActivity().layoutInflater
         val view = inflater.inflate(R.layout.activity_bottom_dialog, null)
 
+        db = NotesDataBaseHelper(requireContext())
+
         builder.setView(view)
 
-        // Отримуємо посилання на Spinners з макету
-        val selectingTypeSpinner = view.findViewById<Spinner>(R.id.SelectingType)
-        val selectingCategorySpinner = view.findViewById<Spinner>(R.id.SelectingCategory)
+        // Отримуємо посилання на елементи з макету
+        sumEditText = view.findViewById(R.id.sum)
+        descriptionEditText = view.findViewById(R.id.DescriptionEntry)
+        selectingTypeSpinner = view.findViewById(R.id.SelectingType)
+        selectingCategorySpinner = view.findViewById(R.id.SelectingCategory)
 
         // Створюємо адаптер для першого Spinner
         val adapterType = ArrayAdapter.createFromResource(requireContext(), R.array.income_expense_array, android.R.layout.simple_spinner_item)
@@ -57,7 +69,22 @@ class MyBottomDialog : DialogFragment() {
 
         // Додаємо кнопки позитивного та негативного відповіді
         builder.setPositiveButton("Підтвердити") { dialog, which ->
-            // Код для підтвердження, наприклад, збереження вибраних даних або виконання дії
+            val sumText = sumEditText.text.toString()
+            val count = sumText.toDoubleOrNull()
+
+            if (count == null) {
+                // Якщо введений текст не може бути сконвертований в Double, показати повідомлення про помилку
+                Toast.makeText(requireContext(), "Будь ласка, введіть дійсне число", Toast.LENGTH_SHORT).show()
+            } else {
+                val description = descriptionEditText.text.toString()
+                val type = selectingTypeSpinner.selectedItem.toString()
+                val category = selectingCategorySpinner.selectedItem.toString()
+                val note = Note(0, count, type, category, description)
+                db.insertNote(note)
+                Toast.makeText(requireContext(), "Додано", Toast.LENGTH_SHORT).show()
+            }
+
+            // Тут ви можете використовувати значення змінних для подальшої обробки
         }
 
         builder.setNegativeButton("Скасувати") { dialog, which ->
