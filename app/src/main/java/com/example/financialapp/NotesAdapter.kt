@@ -1,5 +1,6 @@
 package com.example.financialapp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -53,10 +54,11 @@ class NotesAdapter(private var notes: List<Note>, context: Context) : RecyclerVi
 
     override fun getItemCount(): Int = notes.size
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = notes[position]
         holder.category.text = note.category
-        holder.count.text = note.count.toString()
+        holder.count.text = "${note.count}₴"
         holder.description.text = note.description
     }
 

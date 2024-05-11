@@ -49,7 +49,7 @@ class NotesDataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_
         val db = this.readableDatabase
         val selectQuery = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_TYPE = 'Дохід'"
         val cursor = db.rawQuery(selectQuery, null)
-        if (cursor.moveToFirst()) {
+        if (cursor.moveToLast()) { // Починаємо з останнього запису
             do {
                 val id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
                 val category = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY))
@@ -57,7 +57,7 @@ class NotesDataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_
                 val description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
                 val note = Note(id, count, "Дохід", category, description)
                 notesList.add(note)
-            } while (cursor.moveToNext())
+            } while (cursor.moveToPrevious()) // Переходимо до попереднього запису
         }
         cursor.close()
         db.close()
@@ -70,7 +70,7 @@ class NotesDataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_
         val db = this.readableDatabase
         val selectQuery = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_TYPE = 'Витрати'"
         val cursor = db.rawQuery(selectQuery, null)
-        if (cursor.moveToFirst()) {
+        if (cursor.moveToLast()) {
             do {
                 val id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
                 val category = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY))
@@ -78,7 +78,7 @@ class NotesDataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_
                 val description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
                 val note = Note(id, count, "Витрати", category, description)
                 notesList.add(note)
-            } while (cursor.moveToNext())
+            } while (cursor.moveToPrevious())
         }
         cursor.close()
         db.close()
