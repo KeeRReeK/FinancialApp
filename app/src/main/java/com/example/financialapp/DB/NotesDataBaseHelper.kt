@@ -10,18 +10,19 @@ class NotesDataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_
 
     companion object{
         private const val DATABASE_NAME = "financialapp.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 4
         private const val TABLE_NAME = "allrecords"
         private const val COLUMN_ID = "id"
         private const val COLUMN_COUNT = "count"
         private const val COLUMN_TYPE = "type"
         private const val COLUMN_CATEGORY = "category"
         private const val COLUMN_DESCRIPTION = "description"
+        private const val COLUMN_DATE = "date"
 
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val createTableQuery = "CREATE TABLE $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY, $COLUMN_COUNT INTEGER, $COLUMN_TYPE TEXT, $COLUMN_CATEGORY TEXT, $COLUMN_DESCRIPTION TEXT)"
+        val createTableQuery = "CREATE TABLE $TABLE_NAME ($COLUMN_ID INTEGER PRIMARY KEY, $COLUMN_COUNT INTEGER, $COLUMN_TYPE TEXT, $COLUMN_CATEGORY TEXT, $COLUMN_DESCRIPTION TEXT, $COLUMN_DATE  TEXT)"
         db?.execSQL(createTableQuery)
     }
 
@@ -38,6 +39,7 @@ class NotesDataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_
             put(COLUMN_TYPE, note.type)
             put(COLUMN_CATEGORY, note.category)
             put(COLUMN_DESCRIPTION, note.description)
+            put(COLUMN_DATE, note.date)
         }
         db.insert(TABLE_NAME, null, values)
         db.close()
@@ -49,15 +51,16 @@ class NotesDataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_
         val db = this.readableDatabase
         val selectQuery = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_TYPE = 'Дохід'"
         val cursor = db.rawQuery(selectQuery, null)
-        if (cursor.moveToFirst()) {
+        if (cursor.moveToLast()) {
             do {
                 val id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
                 val category = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY))
                 val count = cursor.getDouble(cursor.getColumnIndex(COLUMN_COUNT))
                 val description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
-                val note = Note(id, count, "Дохід", category, description)
+                val date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
+                val note = Note(id, count, "Дохід", category, description, date)
                 notesList.add(note)
-            } while (cursor.moveToNext())
+            } while (cursor.moveToPrevious())
         }
         cursor.close()
         db.close()
@@ -70,15 +73,16 @@ class NotesDataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_
         val db = this.readableDatabase
         val selectQuery = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_TYPE = 'Витрати'"
         val cursor = db.rawQuery(selectQuery, null)
-        if (cursor.moveToFirst()) {
+        if (cursor.moveToLast()) {
             do {
                 val id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
                 val category = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY))
                 val count = cursor.getDouble(cursor.getColumnIndex(COLUMN_COUNT))
                 val description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
-                val note = Note(id, count, "Витрати", category, description)
+                val date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
+                val note = Note(id, count, "Витрати", category, description, date)
                 notesList.add(note)
-            } while (cursor.moveToNext())
+            } while (cursor.moveToPrevious())
         }
         cursor.close()
         db.close()

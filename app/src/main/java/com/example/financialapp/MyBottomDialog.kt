@@ -1,3 +1,4 @@
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
@@ -11,6 +12,11 @@ import androidx.fragment.app.DialogFragment
 import com.example.financialapp.DB.Note
 import com.example.financialapp.DB.NotesDataBaseHelper
 import com.example.financialapp.R
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
 
 class MyBottomDialog : DialogFragment() {
 
@@ -20,6 +26,7 @@ class MyBottomDialog : DialogFragment() {
     private lateinit var selectingTypeSpinner: Spinner
     private lateinit var selectingCategorySpinner: Spinner
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireActivity())
         val inflater = requireActivity().layoutInflater
@@ -79,7 +86,10 @@ class MyBottomDialog : DialogFragment() {
                 val description = descriptionEditText.text.toString()
                 val type = selectingTypeSpinner.selectedItem.toString()
                 val category = selectingCategorySpinner.selectedItem.toString()
-                val note = Note(0, count, type, category, description)
+                val currentDate = Date()
+                val dateFormat: DateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+                val dateText: String = dateFormat.format(currentDate)
+                val note = Note(0, count, type, category, description, dateText)
 
                 db.insertNote(note)
                 Toast.makeText(requireContext(), "Додано", Toast.LENGTH_SHORT).show()

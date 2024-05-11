@@ -16,6 +16,7 @@ class NotesAdapter(private var notes: List<Note>, context: Context) : RecyclerVi
         val category: TextView = itemView.findViewById(R.id.categoryTextView)
         val count: TextView = itemView.findViewById(R.id.countTextView)
         val description: TextView = itemView.findViewById(R.id.descriptionTextView)
+        val date: TextView = itemView.findViewById(R.id.dateTextView)
     }
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -56,8 +57,9 @@ class NotesAdapter(private var notes: List<Note>, context: Context) : RecyclerVi
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = notes[position]
         holder.category.text = note.category
-        holder.count.text = note.count.toString()
+        holder.count.text = "${note.count}₴"
         holder.description.text = note.description
+        holder.date.text = note.date
     }
 
     fun refreshData(newNotes: List<Note>){
