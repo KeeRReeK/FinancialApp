@@ -5,47 +5,55 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.financialapp.R
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.financialapp.DB.Note
+import com.example.financialapp.DB.NotesDataBaseHelper
+import com.example.financialapp.NotesAdapter
+import com.example.financialapp.databinding.FragmentHomeBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SettingsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
+    private lateinit var db: NotesDataBaseHelper
+    private lateinit var notesAdapter: NotesAdapter
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
+
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        db = NotesDataBaseHelper(requireContext())
+        notesAdapter = NotesAdapter(db.getAllIncomeNotes(), requireContext())
+
+        binding.notesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.notesRecyclerView.adapter = notesAdapter
+
+        binding.buttonProfit.setOnClickListener {
+            notesAdapter.refreshData(db.getAllIncomeNotes())
+        }
+
+        binding.buttonExpensive.setOnClickListener {
+            notesAdapter.refreshData(db.getAllExpenseNotes())
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    override fun onPause() {
+        super.onPause()
+        notesAdapter.refreshData(db.getAllIncomeNotes())
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SettingsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SettingsFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
-    }
 }

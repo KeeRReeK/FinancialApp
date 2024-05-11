@@ -1,5 +1,6 @@
 package com.example.financialapp.DB
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -41,4 +42,47 @@ class NotesDataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_
         db.insert(TABLE_NAME, null, values)
         db.close()
     }
+
+    @SuppressLint("Range")
+    fun getAllIncomeNotes(): List<Note> {
+        val notesList = mutableListOf<Note>()
+        val db = this.readableDatabase
+        val selectQuery = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_TYPE = 'Дохід'"
+        val cursor = db.rawQuery(selectQuery, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
+                val category = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY))
+                val count = cursor.getDouble(cursor.getColumnIndex(COLUMN_COUNT))
+                val description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
+                val note = Note(id, count, "Дохід", category, description)
+                notesList.add(note)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+        return notesList
+    }
+
+    @SuppressLint("Range")
+    fun getAllExpenseNotes(): List<Note> {
+        val notesList = mutableListOf<Note>()
+        val db = this.readableDatabase
+        val selectQuery = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_TYPE = 'Витрати'"
+        val cursor = db.rawQuery(selectQuery, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
+                val category = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY))
+                val count = cursor.getDouble(cursor.getColumnIndex(COLUMN_COUNT))
+                val description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
+                val note = Note(id, count, "Витрати", category, description)
+                notesList.add(note)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+        return notesList
+    }
+
 }

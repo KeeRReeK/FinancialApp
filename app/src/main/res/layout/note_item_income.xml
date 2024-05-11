@@ -42,7 +42,7 @@
                 android:textStyle="bold"
                 android:gravity="center"
                 android:textSize="30sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/green"/>
 
         </LinearLayout>
 

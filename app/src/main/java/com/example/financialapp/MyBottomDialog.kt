@@ -80,6 +80,7 @@ class MyBottomDialog : DialogFragment() {
                 val type = selectingTypeSpinner.selectedItem.toString()
                 val category = selectingCategorySpinner.selectedItem.toString()
                 val note = Note(0, count, type, category, description)
+
                 db.insertNote(note)
                 Toast.makeText(requireContext(), "Додано", Toast.LENGTH_SHORT).show()
             }
