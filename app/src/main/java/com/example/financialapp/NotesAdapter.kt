@@ -1,5 +1,6 @@
 package com.example.financialapp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -54,6 +55,7 @@ class NotesAdapter(private var notes: List<Note>, context: Context) : RecyclerVi
 
     override fun getItemCount(): Int = notes.size
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = notes[position]
         holder.category.text = note.category
@@ -62,6 +64,7 @@ class NotesAdapter(private var notes: List<Note>, context: Context) : RecyclerVi
         holder.date.text = note.date
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun refreshData(newNotes: List<Note>){
         notes = newNotes
         notifyDataSetChanged()

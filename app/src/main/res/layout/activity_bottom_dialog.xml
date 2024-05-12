@@ -43,7 +43,7 @@
             android:textStyle="bold"
             android:hint="Сума"
             android:gravity="center"
-            android:inputType="number" />
+            android:inputType="numberDecimal" />
     </LinearLayout>
 
     <LinearLayout

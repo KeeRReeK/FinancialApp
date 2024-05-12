@@ -2,6 +2,8 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.Spanned
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -11,6 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.financialapp.DB.Note
 import com.example.financialapp.DB.NotesDataBaseHelper
+import com.example.financialapp.Fragments.HomeFragment
 import com.example.financialapp.R
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -41,6 +44,9 @@ class MyBottomDialog : DialogFragment() {
         descriptionEditText = view.findViewById(R.id.DescriptionEntry)
         selectingTypeSpinner = view.findViewById(R.id.SelectingType)
         selectingCategorySpinner = view.findViewById(R.id.SelectingCategory)
+
+        // Додамо фільтр вводу для поля суми
+        setDecimalDigitsInputFilter(sumEditText, 2)
 
         // Створюємо адаптер для першого Spinner
         val adapterType = ArrayAdapter.createFromResource(requireContext(), R.array.income_expense_array, android.R.layout.simple_spinner_item)
@@ -94,8 +100,6 @@ class MyBottomDialog : DialogFragment() {
                 db.insertNote(note)
                 Toast.makeText(requireContext(), "Додано", Toast.LENGTH_SHORT).show()
             }
-
-            // Тут ви можете використовувати значення змінних для подальшої обробки
         }
 
         builder.setNegativeButton("Скасувати") { dialog, which ->
@@ -104,4 +108,27 @@ class MyBottomDialog : DialogFragment() {
 
         return builder.create()
     }
+
+    // Функція для встановлення фільтра вводу для кількості десяткових знаків
+    private fun setDecimalDigitsInputFilter(editText: EditText, decimalDigits: Int) {
+        editText.filters = arrayOf(object : InputFilter {
+            override fun filter(
+                source: CharSequence?,
+                start: Int,
+                end: Int,
+                dest: Spanned?,
+                dstart: Int,
+                dend: Int
+            ): CharSequence? {
+                val newLength = dest?.length ?: (0 - (dend - dstart) + (end - start))
+                val dotPosition = dest?.indexOf(".") ?: -1
+
+                if (dotPosition > -1 && newLength - dotPosition > decimalDigits) {
+                    return ""
+                }
+                return null
+            }
+        })
+    }
 }
+

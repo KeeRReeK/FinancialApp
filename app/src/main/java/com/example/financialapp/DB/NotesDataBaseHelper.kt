@@ -89,4 +89,32 @@ class NotesDataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_
         return notesList
     }
 
+    @SuppressLint("Range")
+    fun getTotalCount(): Double {
+        var totalCount = 0.0
+        val db = this.readableDatabase
+
+        // Отримати суму всіх доходів
+        val incomeQuery = "SELECT SUM($COLUMN_COUNT) AS totalIncome FROM $TABLE_NAME WHERE $COLUMN_TYPE = 'Дохід'"
+        val incomeCursor = db.rawQuery(incomeQuery, null)
+        if (incomeCursor.moveToFirst()) {
+            val totalIncome = incomeCursor.getDouble(incomeCursor.getColumnIndex("totalIncome"))
+            totalCount += totalIncome
+        }
+        incomeCursor.close()
+
+        // Отримати суму всіх витрат
+        val expenseQuery = "SELECT SUM($COLUMN_COUNT) AS totalExpense FROM $TABLE_NAME WHERE $COLUMN_TYPE = 'Витрати'"
+        val expenseCursor = db.rawQuery(expenseQuery, null)
+        if (expenseCursor.moveToFirst()) {
+            val totalExpense = expenseCursor.getDouble(expenseCursor.getColumnIndex("totalExpense"))
+            totalCount += (totalExpense * -1)
+        }
+        expenseCursor.close()
+
+        db.close()
+        return totalCount
+    }
+
+
 }
