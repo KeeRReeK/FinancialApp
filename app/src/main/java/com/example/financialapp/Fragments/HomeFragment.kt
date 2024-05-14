@@ -1,7 +1,6 @@
 package com.example.financialapp.Fragments
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.financialapp.DB.Note
 import com.example.financialapp.DB.NotesDataBaseHelper
 import com.example.financialapp.NotesAdapter
 import com.example.financialapp.R
@@ -50,50 +47,48 @@ class HomeFragment : Fragment() {
 
         binding.buttonProfit.setOnClickListener {
             notesAdapter.refreshData(db.getAllIncomeNotes())
+            binding.notesRecyclerView.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.greenBackround))
         }
 
         binding.buttonExpensive.setOnClickListener {
             notesAdapter.refreshData(db.getAllExpenseNotes())
+            binding.notesRecyclerView.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.redBackround))
         }
 
         val totalCountTextView: TextView = binding.root.findViewById(R.id.totalCount)
         val colorGreen = ContextCompat.getColor(requireContext(), R.color.green)
         val colorRed = ContextCompat.getColor(requireContext(), R.color.red)
         if(db.getTotalCount() < 0){
-            totalCountTextView.text = "${db.getTotalCount()}₴"
+            val totalCount = db.getTotalCount()
+            val formattedTotalCount = String.format("%.2f", totalCount)
+            totalCountTextView.text = "$formattedTotalCount₴"
             totalCountTextView.setTextColor(colorRed)
         } else {
-            totalCountTextView.text = "${db.getTotalCount()}₴"
+            val totalCount = db.getTotalCount()
+            val formattedTotalCount = String.format("%.2f", totalCount)
+            totalCountTextView.text = "$formattedTotalCount₴"
             totalCountTextView.setTextColor(colorGreen)
         }
 
         binding.refreshImage.setOnClickListener {
+        binding.notesRecyclerView.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.greenBackround))
         val colorGreen = ContextCompat.getColor(requireContext(), R.color.green)
         val colorRed = ContextCompat.getColor(requireContext(), R.color.red)
         notesAdapter.refreshData(db.getAllIncomeNotes())
         val totalCountTextView: TextView = binding.root.findViewById(R.id.totalCount)
         if(db.getTotalCount() < 0){
-            totalCountTextView.text = "${db.getTotalCount()}₴"
+            val totalCount = db.getTotalCount()
+            val formattedTotalCount = String.format("%.2f", totalCount)
+            totalCountTextView.text = "$formattedTotalCount₴"
             totalCountTextView.setTextColor(colorRed)
         } else {
-            totalCountTextView.text = "${db.getTotalCount()}₴"
+            val totalCount = db.getTotalCount()
+            val formattedTotalCount = String.format("%.2f", totalCount)
+            totalCountTextView.text = "$formattedTotalCount₴"
             totalCountTextView.setTextColor(colorGreen)
         }
         }
 
     }
-
-//    fun updateDataAfterDialogDismissal() {
-//        notesAdapter.refreshData(db.getAllExpenseNotes())
-//        notesAdapter.refreshData(db.getAllIncomeNotes())
-//        val totalCountTextView: TextView = binding.root.findViewById(R.id.totalCount)
-//        if(db.getTotalCount() < 0){
-//            totalCountTextView.text = "${db.getTotalCount()}₴"
-//            totalCountTextView.setTextColor(Color.RED)
-//        } else {
-//            totalCountTextView.text = "${db.getTotalCount()}₴"
-//            totalCountTextView.setTextColor(Color.GREEN)
-//        }
-//    }
 
 }

@@ -90,10 +90,33 @@ class NotesDataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_
     }
 
     @SuppressLint("Range")
+    fun getAllNotes(): List<Note> {
+        val notesList = mutableListOf<Note>()
+        val db = this.readableDatabase
+        val selectQuery = "SELECT * FROM $TABLE_NAME"
+        val cursor = db.rawQuery(selectQuery, null)
+        if (cursor.moveToLast()) {
+            do {
+                val id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
+                val category = cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY))
+                val count = cursor.getDouble(cursor.getColumnIndex(COLUMN_COUNT))
+                val type = cursor.getString(cursor.getColumnIndex(COLUMN_TYPE))
+                val description = cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION))
+                val date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
+                val note = Note(id, count, type, category, description, date)
+                notesList.add(note)
+            } while (cursor.moveToPrevious())
+        }
+        cursor.close()
+        db.close()
+        return notesList
+    }
+
+
+    @SuppressLint("Range")
     fun getTotalCount(): Double {
         var totalCount = 0.0
         val db = this.readableDatabase
-
         // Отримати суму всіх доходів
         val incomeQuery = "SELECT SUM($COLUMN_COUNT) AS totalIncome FROM $TABLE_NAME WHERE $COLUMN_TYPE = 'Дохід'"
         val incomeCursor = db.rawQuery(incomeQuery, null)
@@ -116,5 +139,46 @@ class NotesDataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_
         return totalCount
     }
 
+    fun updateNote(note: Note){
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put(COLUMN_COUNT, note.count)
+            put(COLUMN_TYPE, note.type)
+            put(COLUMN_CATEGORY, note.category)
+            put(COLUMN_DESCRIPTION, note.description)
+            put(COLUMN_DATE, note.date)
+        }
+        var whereClause = "$COLUMN_ID = ?"
+        val whereArgs = arrayOf(note.id.toString())
+        db.update(TABLE_NAME, values, whereClause, whereArgs)
+        db.close()
+    }
+
+    fun deleteNote(noteId: Int) {
+        val db = writableDatabase
+        val whereClause = "$COLUMN_ID = ?"
+        val whereArgs = arrayOf(noteId.toString())
+        db.delete(TABLE_NAME, whereClause, whereArgs)
+        db.close()
+    }
+
+
+    fun getNoteById(noteId: Int): Note {
+        val db = readableDatabase
+        val query = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_ID = $noteId"
+        val cursor = db.rawQuery(query, null)
+        cursor.moveToFirst()
+
+        val id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+        val count = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_COUNT))
+        val type = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TYPE))
+        val category = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY))
+        val description = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPTION))
+        val date = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE))
+
+        cursor.close()
+        db.close()
+        return Note(id, count, type, category, description, date)
+    }
 
 }

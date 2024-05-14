@@ -2,15 +2,23 @@ package com.example.financialapp
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.financialapp.DB.Note
+import com.example.financialapp.DB.NotesDataBaseHelper
+import com.example.financialapp.DB.UpdateNoteActivity
 
 class NotesAdapter(private var notes: List<Note>, context: Context) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>(){
+
+    private val db: NotesDataBaseHelper = NotesDataBaseHelper(context)
+    private lateinit var notesRecyclerView: RecyclerView
+
 
     class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
@@ -18,6 +26,8 @@ class NotesAdapter(private var notes: List<Note>, context: Context) : RecyclerVi
         val count: TextView = itemView.findViewById(R.id.countTextView)
         val description: TextView = itemView.findViewById(R.id.descriptionTextView)
         val date: TextView = itemView.findViewById(R.id.dateTextView)
+        val updateButton: ImageView = itemView.findViewById(R.id.updateButton)
+        val deleteButton: ImageView = itemView.findViewById(R.id.deleteButton)
     }
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -47,12 +57,6 @@ class NotesAdapter(private var notes: List<Note>, context: Context) : RecyclerVi
         return NoteViewHolder(view)
     }
 
-
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-//        val view = LayoutInflater.from(parent.context).inflate(R.layout.note_item, parent, false)
-//        return NoteViewHolder(view)
-//    }
-
     override fun getItemCount(): Int = notes.size
 
     @SuppressLint("SetTextI18n")
@@ -62,7 +66,34 @@ class NotesAdapter(private var notes: List<Note>, context: Context) : RecyclerVi
         holder.count.text = "${note.count}₴"
         holder.description.text = note.description
         holder.date.text = note.date
+        holder.updateButton.setOnClickListener{
+            val intent = Intent(holder.itemView.context, UpdateNoteActivity::class.java).apply {
+                putExtra("note_id", note.id)
+            }
+            holder.itemView.context.startActivity(intent)
+        }
+
+        holder.deleteButton.setOnClickListener{
+            db.deleteNote(note.id)
+            if(note.type == "Дохід"){
+                refreshData(db.getAllIncomeNotes())
+            } else {
+                refreshData(db.getAllExpenseNotes())
+            }
+            Toast.makeText(holder.itemView.context, "Запис видалений", Toast.LENGTH_SHORT).show()
+        }
     }
+
+//        holder.deleteButton.setOnClickListener{
+//            db.deleteNote(note.id)
+//            if(note.type == "Дохід"){
+//                refreshData(db.getAllIncomeNotes())
+//            } else {
+//                refreshData(db.getAllExpenseNotes())
+//            }
+//            Toast.makeText(holder.itemView.context, "Запис видалений", Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
     @SuppressLint("NotifyDataSetChanged")
     fun refreshData(newNotes: List<Note>){

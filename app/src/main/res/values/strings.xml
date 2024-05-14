@@ -16,10 +16,10 @@
 
 
     <string-array name="income_array">
-    <item>Депозит</item>
-    <item>Зарплата</item>
-    <item>Збереження</item>
-</string-array>
+        <item>Депозит</item>
+        <item>Зарплата</item>
+        <item>Збереження</item>
+    </string-array>
 
 
     <string-array name="expense_array">
