@@ -5,16 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.SettingsFragment">
 
-    <EditText
-        android:id="@+id/countCalendarDay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:hint="День"
-        android:gravity="center"
-        android:inputType="number" />
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>
