@@ -56,14 +56,18 @@ class HomeFragment : Fragment() {
             notesAdapter.refreshData(db.getAllExpenseNotes())
         }
 
+        val totalCount = db.getTotalCount()
+        val formattedTotalCount = String.format("%.2f", totalCount)
+
         val totalCountTextView: TextView = binding.root.findViewById(R.id.totalCount)
         val colorGreen = ContextCompat.getColor(requireContext(), R.color.green)
         val colorRed = ContextCompat.getColor(requireContext(), R.color.red)
-        if(db.getTotalCount() < 0){
-            totalCountTextView.text = "${db.getTotalCount()}₴"
+
+        if (totalCount < 0) {
+            totalCountTextView.text = "$formattedTotalCount₴"
             totalCountTextView.setTextColor(colorRed)
         } else {
-            totalCountTextView.text = "${db.getTotalCount()}₴"
+            totalCountTextView.text = "$formattedTotalCount₴"
             totalCountTextView.setTextColor(colorGreen)
         }
 

@@ -116,5 +116,30 @@ class NotesDataBaseHelper(context: Context): SQLiteOpenHelper(context, DATABASE_
         return totalCount
     }
 
+    fun getTotalCategory(category: String): Double {
+        var totalCount = 0.0
+        val db = this.readableDatabase
+
+        // Отримати суму всіх доходів та витрат для вказаної категорії
+        val query = "SELECT SUM($COLUMN_COUNT) AS total, $COLUMN_TYPE FROM $TABLE_NAME WHERE $COLUMN_CATEGORY = ? GROUP BY $COLUMN_TYPE"
+        val cursor = db.rawQuery(query, arrayOf(category))
+        if (cursor.moveToFirst()) {
+            do {
+                val total = cursor.getDouble(cursor.getColumnIndexOrThrow("total"))
+                val type = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TYPE))
+                if (type == "Дохід") {
+                    totalCount += total
+                } else if (type == "Витрати") {
+                    totalCount -= total
+                }
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+        return totalCount
+    }
+
+
+
 
 }
