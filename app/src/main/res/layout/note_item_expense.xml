@@ -25,7 +25,8 @@
                 android:layout_height="wrap_content"
                 android:text="Category"
                 android:textStyle="bold"
-                android:textSize="30sp"
+                android:textSize="25sp"
+                android:layout_gravity="start"
                 android:textColor="@color/black"/>
 
             <TextView

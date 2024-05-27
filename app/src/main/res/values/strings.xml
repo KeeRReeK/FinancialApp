@@ -14,6 +14,11 @@
         <item>Збереження</item>
     </string-array>
 
+    <string-array name="currency_array">
+        <item>Гривні</item>
+        <item>Долари</item>
+    </string-array>
+
 
     <string-array name="income_array">
         <item>Депозит</item>
@@ -26,7 +31,6 @@
         <item>Автомобіль</item>
         <item>Одяг</item>
         <item>Комунікація</item>
-        <item>Харчування поза домом</item>
         <item>Розваги</item>
         <item>Їжа</item>
         <item>Подарунки</item>

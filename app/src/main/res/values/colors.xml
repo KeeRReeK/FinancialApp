@@ -14,5 +14,7 @@
     <color name="color3">#AFB8EC</color>
     <color name="color4">#E6EDF3</color>
     <color name="red">#FF1100</color>
+    <color name="red1">#F85145</color>
+    <color name="red2">#F88077</color>
     <color name="addImage">#2FB8F6</color>
 </resources>

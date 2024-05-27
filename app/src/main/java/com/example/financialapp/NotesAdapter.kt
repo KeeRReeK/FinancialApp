@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.example.financialapp.DB.Note
 import com.example.financialapp.DB.NotesDataBaseHelper
@@ -63,6 +64,9 @@ class NotesAdapter(private var notes: List<Note>, context: Context) : RecyclerVi
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = notes[position]
         holder.category.text = note.category
+
+
+
         holder.count.text = "${note.count}₴"
         holder.description.text = note.description
         holder.date.text = note.date
@@ -83,17 +87,6 @@ class NotesAdapter(private var notes: List<Note>, context: Context) : RecyclerVi
             Toast.makeText(holder.itemView.context, "Запис видалений", Toast.LENGTH_SHORT).show()
         }
     }
-
-//        holder.deleteButton.setOnClickListener{
-//            db.deleteNote(note.id)
-//            if(note.type == "Дохід"){
-//                refreshData(db.getAllIncomeNotes())
-//            } else {
-//                refreshData(db.getAllExpenseNotes())
-//            }
-//            Toast.makeText(holder.itemView.context, "Запис видалений", Toast.LENGTH_SHORT).show()
-//        }
-//    }
 
     @SuppressLint("NotifyDataSetChanged")
     fun refreshData(newNotes: List<Note>){

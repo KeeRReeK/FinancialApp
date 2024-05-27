@@ -22,8 +22,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-
-
+    private val sharedPrefFile = "com.example.financialapp.PREFERENCE_FILE_KEY"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,12 +31,13 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val settingsFragment = SettingsFragment()
 
         db = NotesDataBaseHelper(requireContext())
         notesAdapter = NotesAdapter(db.getAllIncomeNotes(), requireContext())
@@ -58,37 +58,38 @@ class HomeFragment : Fragment() {
         val totalCountTextView: TextView = binding.root.findViewById(R.id.totalCount)
         val colorGreen = ContextCompat.getColor(requireContext(), R.color.green)
         val colorRed = ContextCompat.getColor(requireContext(), R.color.red)
-        if(db.getTotalCount() < 0){
+
+        if (db.getTotalCount() < 0) {
             val totalCount = db.getTotalCount()
             val formattedTotalCount = String.format("%.2f", totalCount)
+            // Вибір відповідного символу в залежності від стану Switch
             totalCountTextView.text = "$formattedTotalCount₴"
             totalCountTextView.setTextColor(colorRed)
         } else {
             val totalCount = db.getTotalCount()
             val formattedTotalCount = String.format("%.2f", totalCount)
+            // Вибір відповідного символу в залежності від стану Switch
             totalCountTextView.text = "$formattedTotalCount₴"
             totalCountTextView.setTextColor(colorGreen)
         }
 
         binding.refreshImage.setOnClickListener {
-        binding.notesRecyclerView.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.greenBackround))
-        val colorGreen = ContextCompat.getColor(requireContext(), R.color.green)
-        val colorRed = ContextCompat.getColor(requireContext(), R.color.red)
-        notesAdapter.refreshData(db.getAllIncomeNotes())
-        val totalCountTextView: TextView = binding.root.findViewById(R.id.totalCount)
-        if(db.getTotalCount() < 0){
-            val totalCount = db.getTotalCount()
-            val formattedTotalCount = String.format("%.2f", totalCount)
-            totalCountTextView.text = "$formattedTotalCount₴"
-            totalCountTextView.setTextColor(colorRed)
-        } else {
-            val totalCount = db.getTotalCount()
-            val formattedTotalCount = String.format("%.2f", totalCount)
-            totalCountTextView.text = "$formattedTotalCount₴"
-            totalCountTextView.setTextColor(colorGreen)
+            binding.notesRecyclerView.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.greenBackround))
+            notesAdapter.refreshData(db.getAllIncomeNotes())
+            val totalCountTextView: TextView = binding.root.findViewById(R.id.totalCount)
+            if (db.getTotalCount() < 0) {
+                val totalCount = db.getTotalCount()
+                val formattedTotalCount = String.format("%.2f", totalCount)
+                totalCountTextView.text = "$formattedTotalCount₴"
+                totalCountTextView.setTextColor(colorRed)
+            } else {
+                val totalCount = db.getTotalCount()
+                val formattedTotalCount = String.format("%.2f", totalCount)
+                // Вибір відповідного символу в залежності від стану Switch
+                totalCountTextView.text = "$formattedTotalCount₴"
+                totalCountTextView.setTextColor(colorGreen)
+            }
         }
-        }
-
     }
 
 }

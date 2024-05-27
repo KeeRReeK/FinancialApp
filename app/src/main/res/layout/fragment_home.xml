@@ -35,7 +35,7 @@
                 android:fontFamily="@font/aldrich"
                 android:text="123₴"
                 android:textColor="@color/green"
-                android:textSize="70sp" />
+                android:textSize="50sp" />
 
         </RelativeLayout>
 
