@@ -8,64 +8,108 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp">
+        android:background="@color/color2"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="По всім запитанням:"
+                    android:textSize="30sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:background="@color/color1"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="financialapp@gmail.com"
+                    android:background="@color/color1"
+                    android:textSize="25sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="НАВЧАННЯ ПО ЗАСТОСУНКУ"
+                    android:background="@color/color3"
+                    android:gravity="center"
+                    android:textSize="30sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+
+
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="800dp"
+                android:src="@drawable/one_image"/>
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="800dp"
+                android:src="@drawable/two_image"/>
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="800dp"
+                android:src="@drawable/three_image"/>
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="800dp"
+                android:src="@drawable/four_image"/>
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="800dp"
+                android:src="@drawable/five_image"/>
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="800dp"
+                android:src="@drawable/six_image"/>
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="800dp"
+                android:src="@drawable/seven_image"/>
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="800dp"
+                android:src="@drawable/eight_image"/>
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="800dp"
+                android:src="@drawable/nine_image"/>
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="800dp"
+                android:src="@drawable/ten_image"/>
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="800dp"
+                android:src="@drawable/eleven_image"/>
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="800dp"
+                android:src="@drawable/twelve_image"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="800dp"
+                android:src="@drawable/thirteen_image"/>
 
         </LinearLayout>
 
